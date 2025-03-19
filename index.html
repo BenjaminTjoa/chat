@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welkom bij Chat.Benjamintjoa.com</title>
+  <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3WPSN8WBPM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3WPSN8WBPM');
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500&display=swap');
+    
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #000000;
+      color: #ffffff;
+    }
+    #login-screen {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
+    #login-box {
+      background-color: rgba(28, 28, 30, 0.8);
+      padding: 40px;
+      border-radius: 18px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 30px;
+      font-weight: 500;
+      font-size: 24px;
+    }
+    input {
+      display: block;
+      margin: 20px 0;
+      padding: 12px;
+      width: 100%;
+      background-color: rgba(118, 118, 128, 0.24);
+      border: none;
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    input::placeholder {
+      color: #8e8e93;
+    }
+    button {
+      background-color: #0A84FF;
+      color: white;
+      padding: 12px 0;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #007AFF;
+    }
+    #inspirational-message {
+      margin-top: 20px;
+      font-size: 16px;
+      text-align: center;
+    }
+    .rainbow-text {
+      font-weight: bold;
+      background: linear-gradient(90deg, #cb1333, #de45c1, #b96be2, #84a9e0, #23d43b, #d0bb08, #eb6d17);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+    .timestamp {
+      color: #b0b0b0;
+      font-size: 0.8rem;
+      margin-left: 10px;
+    }
+    #welcome-screen {
+      display: none;
+      background-color: #000000;
+      color: #ffffff;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      text-align: center;
+      flex-direction: column;
+      padding: 20px;
+    }
+    #chat-container {
+      display: none;
+      padding: 20px;
+      background-color: #000000;
+      color: #1d1d1f;
+      height: 100%;
+      box-sizing: border-box;
+    }
+    #chat-container h1 {
+      font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Arial, sans-serif;
+      text-align: center;
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 28px;
+      color: #007AFF;
+    }
+    #chatbox {
+      width: 90%;
+      max-width: 500px;
+      height: 350px;
+      overflow-y: scroll;
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #d2d2d7;
+      padding: 15px;
+      margin: 20px auto;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: left;
+      color: #1d1d1f;
+    }
+
+    .chat-input-container {
+      display: flex;
+      align-items: center;
+      width: 90%;
+      max-width: 500px;
+      margin: 10px auto;
+    }
+    #messageInput {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #d2d2d7;
+      border-radius: 8px 0 0 8px;
+      font-size: 16px;
+      outline: none;
+    }
+    #sendBtn {
+      padding: 0;
+      background: #34C759;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-left: 15px;
+    }
+    #sendBtn:hover {
+      background: #34C759;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="login-screen">
+    <div id="login-box">
+      <h2>Inloggen</h2>
+      <input type="text" id="leerlingnummer" placeholder="Voer je leerlingnummer in">
+      <input type="password" id="wachtwoord" placeholder="Voer het wachtwoord in">
+      <button id="loginButton">Log in</button>
+      <p id="message"></p>
+    </div>
+    <div id="inspirational-message"></div>
+  </div>
+
+  <div id="welcome-screen">
+    <div id="welcome-message"></div>
+  </div>
+
+  <div id="chat-container">
+    <h1>Chat.Benjamintjoa.com</h1>
+    <h1>2E</h1>
+    <div id="chatbox"></div>
+    <div class="chat-input-container">
+      <input type="text" id="messageInput" placeholder="Typ een bericht...">
+      <button id="sendBtn"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
+    import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-database.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCLZo_Yq5UXG7f7eBHecRd7yL88kExqHSo",
+      authDomain: "chat-ca14e.firebaseapp.com",
+      databaseURL: "https://chat-ca14e-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "chat-ca14e",
+      storageBucket: "chat-ca14e.appspot.com",
+      messagingSenderId: "401806253692",
+      appId: "1:401806253692:web:0649c13d44808775d9b3f9",
+      measurementId: "G-T7SGR9K058"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth();
+
+    signInAnonymously(auth).catch(error => {
+      console.error("Fout bij inloggen:", error);
+    });
+
+    let userId = "";
+    let currentUsername = "";
+
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        userId = user.uid;
+        console.log("Ingelogd als:", userId);
+      } else {
+        console.log("Niet ingelogd");
+      }
+    });
+
+    const chatRef = ref(db, "chats");
+
+    function loadMessages() {
+      const chatbox = document.getElementById("chatbox");
+      onChildAdded(chatRef, snapshot => {
+        const msg = snapshot.val();
+        const msgElement = document.createElement("p");
+        let displayTime = "";
+        if (msg.timestamp) {
+          const parts = msg.timestamp.split(":");
+          displayTime = parts[0] + ":" + parts[1];
+        }
+        let userColor = "#000000";
+        for (const key in leerlingen) {
+          const leerling = leerlingen[key];
+          const fullName = leerling.voornaam + " " + leerling.achternaam;
+          console.log("Vergelijking:", fullName, "=== msg.user:", msg.user);
+          if (fullName === msg.user) {
+            if (leerling.kleur && leerling.kleur !== "") {
+              userColor = leerling.kleur;
+            }
+            break;
+          }
+        }
+        msgElement.innerHTML = `<strong style="color: ${userColor}">${msg.user}</strong>: ${msg.text} <span class="timestamp">${displayTime}</span>`;
+        chatbox.appendChild(msgElement);
+        chatbox.scrollTop = chatbox.scrollHeight;
+      });
+    }
+
+
+    document.getElementById("sendBtn").addEventListener("click", () => {
+      const messageInput = document.getElementById("messageInput");
+      const message = messageInput.value.trim();
+      if (message !== "" && currentUsername !== "") {fetch("http://worldtimeapi.org/api/timezone/Europe/Amsterdam")
+          .then(response => response.json())
+          .then(data => {
+            const isoTime = data.datetime;
+            const time = new Date(isoTime);
+            const hours = time.getHours().toString().padStart(2, '0');
+            const minutes = time.getMinutes().toString().padStart(2, '0');
+            const seconds = time.getSeconds().toString().padStart(2, '0');
+            const fullTime = `${hours}:${minutes}:${seconds}`;
+            push(chatRef, {
+              user: currentUsername,
+              text: message,
+              timestamp: fullTime
+            });
+          })
+          .catch(() => {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const fullTime = `${hours}:${minutes}:${seconds}`;
+            push(chatRef, {
+              user: currentUsername,
+              text: message,
+              timestamp: fullTime
+            });
+          });
+        messageInput.value = "";
+      }
+    });
+
+    document.getElementById("messageInput").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("sendBtn").click();
+  }
+});
+
+    const leerlingen = {
+            "2223069": { voornaam: "Linde", achternaam: "Constandse" },
+            "2223215": { voornaam: "Benjamin", achternaam: "Tjoa", kleur: "#34C759" },
+            "2324001": { voornaam: "Charlotte", achternaam: "Adema" },
+            "2324002": { voornaam: "Yfke", achternaam: "Agterhof" },
+            "2324005": { voornaam: "Elena", achternaam: "Al-Kinani" },
+            "2324011": { voornaam: "Olivia", achternaam: "Aznar-Oswald" },
+            "2324030": { voornaam: "Isa", achternaam: "Buijs" },
+            "2324033": { voornaam: "Kemal", achternaam: "Ceylan" },
+            "2324037": { voornaam: "Lotte", achternaam: "Costantin" },
+            "2324038": { voornaam: "Sara", achternaam: "Dekker" },
+            "2324048": { voornaam: "Sebastiaan", achternaam: "Filmer" },
+            "2324057": { voornaam: "Lumen", achternaam: "Hokstam", kleur: "#bbbb00" },
+            "2324064": { voornaam: "Loek", achternaam: "de Jonge" },
+            "2324084": { voornaam: "Taeke", achternaam: "van der Lugt" },
+            "2324091": { voornaam: "Merlijn", achternaam: "Massa" },
+            "2324110": { voornaam: "Fenna", achternaam: "Rasch" },
+            "2324116": { voornaam: "Sasha", achternaam: "Rodriguez", kleur: "#ff0000" },
+            "2324121": { voornaam: "Hanna", achternaam: "van Ruiten" },
+            "2324130": { voornaam: "Olivier", achternaam: "Soyogul" },
+            "2324131": { voornaam: "Dexter", achternaam: "Speelman" },
+            "2324139": { voornaam: "Julian", achternaam: "Streefland" },
+            "2324150": { voornaam: "Anne-Louise", achternaam: "van Veen" },
+            "2324153": { voornaam: "Luc", achternaam: "Visser" },
+            "2324156": { voornaam: "Cas", achternaam: "Vrisekoop" },
+            "2324159": { voornaam: "Daniel", achternaam: "Westerkamp" },
+            "2324162": { voornaam: "Olivia", achternaam: "van der Wurff" },
+            "2324165": { voornaam: "Hanna", achternaam: "Zhang" },
+            "2324196": { voornaam: "Max", achternaam: "Carrière" },
+            "2324221": { voornaam: "David", achternaam: "Prinsen" },
+            "2324227": { voornaam: "Scott", achternaam: "Rusman" },
+            "2425294": { voornaam: "Toon", achternaam: "de Vrieze" },
+            "sjoerd": { voornaam: "Sjoerd", achternaam: "van Aken" }
+        };
+
+        const inspirationalMessages = [
+    "Ontdek de magie van gesprekken op chat.benjamintjoa.com.",
+    "Één klik verwijderd van inspirerende dialogen.",
+    "Chatten op zijn best, direct en elegant.",
+    "Verbinden zonder grenzen op chat.benjamintjoa.com.",
+    "Elk gesprek opent een nieuwe wereld.",
+    "Chat met flair en voel de vibe.",
+    "Diepgaande woorden, eenvoudig gedeeld.",
+    "Chat die inspireert, zonder afleiding.",
+    "Elk gesprek is een nieuw avontuur.",
+    "Verbind en deel – moeiteloos en snel.",
+    "Jouw stem, onze wereld op chat.benjamintjoa.com.",
+    "Waar woorden leven en verhalen bloeien.",
+    "Eenvoud ontmoet expressie in elk bericht.",
+    "Voel de energie van elke oprechte chat.",
+    "Stijlvolle gesprekken, puur en helder.",
+    "Elk woord telt, elk gesprek boeit.",
+    "Soepele chats voor de moderne geest.",
+    "De kunst van chatten, heruitgevonden.",
+    "Chat die je wereld verrijkt met betekenis.",
+    "Simpel, strak en vol gevoel.",
+    "Beleef gesprekken die verbinden.",
+    "Van woorden naar werelden op chat.benjamintjoa.com.",
+    "Laat je gedachten de vrije loop.",
+    "Jouw verhalen verdienen een podium.",
+    "Elk gesprek is een unieke ervaring.",
+    "Direct, duidelijk en dynamisch.",
+    "Verbind en ontdek, met elke klik.",
+    "De plek waar gesprekken beginnen.",
+    "Chat en creëer, op jouw eigen manier.",
+    "Eenvoud en elegantie in elke zin.",
+    "Ontmoet gelijkgestemden op chat.benjamintjoa.com.",
+    "Jouw woorden, onze inspiratie.",
+    "Elk gesprek is een stukje vrijheid.",
+    "Waar communicatie kunst wordt.",
+    "Pure connectie, puur chatten.",
+    "Jouw stem verdient het beste podium.",
+    "Verbind met de wereld, één chat tegelijk.",
+    "Gesprekken die je dag verlichten.",
+    "Chat vol energie en enthousiasme.",
+    "Verhalen delen, betekenis creëren.",
+    "Elegant en eenvoudig, zoals het hoort.",
+    "De toekomst van chatten is hier.",
+    "Waar eenvoud en diepgang samenkomen.",
+    "Elk gesprek is een kans om te verbinden.",
+    "Ontgrendel de kracht van communicatie.",
+    "Één klik, eindeloos gesprek.",
+    "Het ritme van woorden, perfect in balans.",
+    "Waar ideeën tot leven komen.",
+    "Stijlvolle chats voor de fijnproever.",
+    "Jouw gedachten, onze passie.",
+    "Elk gesprek is een meesterwerk.",
+    "Voel de impact van elke uitwisseling.",
+    "Breng je verhaal tot leven.",
+    "Puur, elegant en altijd binnen handbereik.",
+    "Ontdek, deel en laat je inspireren.",
+    "Gesprekken die je hart raken.",
+    "Waar eenvoud en innovatie samenkomen.",
+    "Elke klik opent een nieuwe dialoog.",
+    "Verbind, deel en straal.",
+    "Diepgaande chats voor de moderne ziel.",
+    "Hier krijgt jouw stem echt impact.",
+    "Verhalen die verbinden en woorden die inspireren.",
+    "Op chat.benjamintjoa.com wordt elk gesprek speciaal.",
+    "Één klik en je bent verbonden met de wereld.",
+    "Chatten zoals het bedoeld is: simpel en krachtig.",
+    "Waar elke boodschap telt.",
+    "Ontdek de kunst van het gesprek.",
+    "Stijlvol communiceren, zonder ruis.",
+    "Elk gesprek opent een nieuwe horizon.",
+    "Eenvoud in elk woord, elegantie in elke zin.",
+    "Chat vol mogelijkheden, zonder afleiding.",
+    "Hier draait alles om de kracht van woorden.",
+    "Verbind en beleef de puurheid van communicatie.",
+    "Elk gesprek is een kans om te groeien.",
+    "Inspirerende chats, direct binnen handbereik.",
+    "Jouw stem is onze passie.",
+    "Elk woord vertelt een verhaal, elk gesprek een avontuur.",
+    "Waar chatten een kunstvorm wordt.",
+    "Ontgrendel de potentie van je woorden.",
+    "Puur, simpel en vol karakter.",
+    "Een nieuwe dimensie van chatten wacht op je.",
+    "Waar elke dialoog telt.",
+    "Chat die je inspireert en verbindt.",
+    "Het gesprek dat je hart verwarmt.",
+    "Simpelweg de beste manier om te communiceren.",
+    "Elk gesprek is een uniek verhaal.",
+    "Waar eenvoud en betekenis elkaar ontmoeten.",
+    "Verbind en ontdek jouw eigen stem.",
+    "Gesprekken die resoneren, woorden die blijven hangen.",
+    "De essentie van communicatie, perfect gepresenteerd.",
+    "Chat met elegantie, chat met gevoel.",
+    "Waar elke uitwisseling een kunstwerk is.",
+    "Één klik opent een wereld vol verhalen.",
+    "Breng je ideeën tot leven in elke chat.",
+    "Verbind met de wereld, moeiteloos en strak.",
+    "Elk gesprek is een sprong in de toekomst.",
+    "Chat met passie en precisie.",
+    "Waar eenvoud en innovatie hand in hand gaan.",
+    "Ontdek een nieuwe wereld van communicatie.",
+    "Chat vol inspiratie, altijd en overal."
+];
+
+
+    function getRandomColor() {
+      const rand = Math.random();
+      if (rand < 0.48) return '#007AFF';
+      if (rand < 0.96) return '#FF2D55';
+      if (rand < 0.9989) return '#FFCC00';
+      if (rand < 0.999) return '#AF52DE';
+      return '#34C759';
+    }
+
+    function getRandomMessage(messages) {
+      const randomIndex = Math.floor(Math.random() * messages.length);
+      return messages[randomIndex];
+    }
+
+    function displayInspirationalMessage() {
+      const messageElement = document.getElementById('inspirational-message');
+      const message = getRandomMessage(inspirationalMessages);
+      const color = getRandomColor();
+      messageElement.textContent = message;
+      messageElement.style.color = color;
+    }
+
+    function verifyLeerling() {
+      const leerlingnummer = document.getElementById('leerlingnummer').value.toLowerCase();
+      const wachtwoord = document.getElementById('wachtwoord').value.toLowerCase();
+      const messageElement = document.getElementById('message');
+      const leerling = leerlingen[leerlingnummer];
+
+      if (leerling && (
+          wachtwoord === 'ecolle' ||
+          wachtwoord === leerlingnummer ||
+          wachtwoord === leerling.voornaam.toLowerCase() ||
+          wachtwoord === leerling.achternaam.toLowerCase() ||
+          wachtwoord === `${leerling.voornaam.toLowerCase()} ${leerling.achternaam.toLowerCase()}`
+      )) {
+        currentUsername = leerling.voornaam + " " + leerling.achternaam;
+        
+        document.getElementById('login-screen').style.display = 'none';
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const welcomeMessage = document.getElementById('welcome-message');
+        welcomeScreen.style.display = 'flex';
+        welcomeMessage.innerHTML = '';
+        
+        const fullName = `<span class="rainbow-text">${currentUsername}</span>`;
+        welcomeMessage.innerHTML = `Welkom ${fullName}!<br>`;
+        const randomWelcomeMessage = getRandomMessage(inspirationalMessages);
+        setTimeout(() => typeWriter(`Wat mooi dat je chat.benjamintjoa.com gebruikt! ${randomWelcomeMessage}`, welcomeMessage, 0), 1000);
+      } else {
+        messageElement.textContent = 'Deze website is eigenlijk alleen voor leerlingen uit 2E. Mocht je toch een account willen aanmaken dan kan je een mail sturen naar: chat@benjamintjoa.com.';
+      }
+    }
+
+    function typeWriter(text, element, index) {
+      if (index < text.length) {
+        element.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(() => typeWriter(text, element, index), 50);
+      } else {
+        setTimeout(() => {
+          document.getElementById('welcome-screen').style.display = 'none';
+          document.getElementById('chat-container').style.display = 'block';
+          loadMessages();
+        }, 1000);
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      const leerlingnummerField = document.getElementById('leerlingnummer');
+      const wachtwoordField = document.getElementById('wachtwoord');
+      const loginButton = document.getElementById('loginButton');
+
+      if (e.key === 'Enter') {
+        if (document.activeElement === leerlingnummerField) {
+          wachtwoordField.focus();
+        } else if (document.activeElement === wachtwoordField) {
+          loginButton.click();
+        }
+      }
+    });
+
+    document.getElementById('loginButton').addEventListener('click', verifyLeerling);
+
+    window.onload = function() {
+      displayInspirationalMessage();
+    };
+  </script>
+</body>
+</html>
